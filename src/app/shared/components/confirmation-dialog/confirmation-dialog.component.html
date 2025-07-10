@@ -1,0 +1,10 @@
+<dialog #dialog class="confirmation-dialog">
+  <div class="dialog-content">
+    <h3>{{ title }}</h3>
+    <p [innerHTML]="message"></p>
+    <div class="dialog-actions">
+      <button [class]="cancelButtonClass" (click)="onCancel()">{{ cancelText }}</button>
+      <button [class]="confirmButtonClass" (click)="onConfirm()">{{ confirmText }}</button>
+    </div>
+  </div>
+</dialog> 

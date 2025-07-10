@@ -1,0 +1,117 @@
+// Variables
+$primary-color: #007bff;
+$danger-color: #dc3545;
+$warning-color: #ffc107;
+$disabled-color: #ccc;
+$background-color: #f4f4f4;
+$text-color: #333;
+$white: #fff;
+$border-color: #ccc;
+$shadow-color: rgba(0, 0, 0, 0.1);
+$focus-shadow-color: rgba(0, 123, 255, 0.25);
+
+// Typography
+$font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+
+// Spacing
+$spacing-sm: 0.5rem;
+$spacing-md: 0.75rem;
+$spacing-lg: 1rem;
+$spacing-xl: 2rem;
+
+// Border radius
+$border-radius-sm: 4px;
+$border-radius-md: 6px;
+$border-radius-lg: 8px;
+
+// Transitions
+$transition-duration: 0.2s;
+
+body {
+  font-family: $font-family;
+  margin: 0;
+  padding: $spacing-xl;
+  background-color: $background-color;
+  color: $text-color;
+}
+
+.container {
+  max-width: 1000px;
+  margin: auto;
+  padding: $spacing-xl;
+  background: $white;
+  border-radius: $border-radius-lg;
+  box-shadow: 0 2px 10px $shadow-color;
+}
+
+.standard-input {
+  width: 100%;
+  border: 1px solid $border-color;
+  border-radius: $border-radius-md;
+  font-size: $spacing-lg;
+  background-color: $white;
+  transition: border-color $transition-duration, box-shadow $transition-duration;
+
+  &:focus {
+    outline: none;
+    border-color: $primary-color;
+    box-shadow: 0 0 0 2px $focus-shadow-color;
+  }
+
+  &:disabled {
+    background-color: #f5f5f5;
+    cursor: not-allowed;
+  }
+
+  &.text-input {
+    padding: $spacing-md;
+    border-radius: $border-radius-sm;
+  }
+
+  &.number-input {
+    padding: $spacing-md 2.5rem $spacing-md $spacing-md;
+
+    // Remove spinner buttons for number inputs
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+  }
+}
+
+input[type="text"], 
+select {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: $spacing-lg;
+  border-radius: $border-radius-sm;
+  border: 1px solid $border-color;
+}
+
+button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: $border-radius-sm;
+  cursor: pointer;
+  font-size: $spacing-lg;
+  color: $white;
+  background-color: $primary-color;
+
+  &.primary {
+    background-color: $primary-color;
+  }
+
+  &.edit {
+    background-color: $warning-color;
+  }
+
+  &.delete {
+    background-color: $danger-color;
+  }
+
+  &:disabled {
+    background-color: $disabled-color;
+    cursor: not-allowed;
+  }
+}

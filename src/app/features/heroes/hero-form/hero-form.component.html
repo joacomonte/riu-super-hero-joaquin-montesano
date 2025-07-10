@@ -1,0 +1,76 @@
+<div class="container">
+  <h2>{{ isEditMode() ? 'Edit' : 'Create' }} Super Hero</h2>
+  
+  <form [formGroup]="heroForm" (ngSubmit)="onSubmit()" class="hero-form">
+    <div class="form-group">
+      <label for="name" class="form-label">Hero Name *</label>
+      <input 
+        id="name" 
+        type="text" 
+        formControlName="name" 
+        appUppercase
+        class="form-control"
+        [class.is-invalid]="heroForm.get('name')?.invalid && heroForm.get('name')?.touched"
+        placeholder="Enter hero name"
+        aria-describedby="name-error">
+      @if (heroForm.get('name')?.invalid && heroForm.get('name')?.touched) {
+        <div id="name-error" class="error-message" role="alert">
+          Name is required.
+        </div>
+      }
+    </div>
+
+    <div class="form-group">
+      <label for="realName" class="form-label">Real Name *</label>
+      <input 
+        id="realName" 
+        type="text" 
+        formControlName="realName"
+        class="form-control"
+        [class.is-invalid]="heroForm.get('realName')?.invalid && heroForm.get('realName')?.touched"
+        placeholder="Enter real name"
+        aria-describedby="realName-error">
+      @if (heroForm.get('realName')?.invalid && heroForm.get('realName')?.touched) {
+        <div id="realName-error" class="error-message" role="alert">
+          Real name is required.
+        </div>
+      }
+    </div>
+
+    <div class="form-group">
+      <label for="universe" class="form-label">Universe</label>
+      <select 
+        id="universe" 
+        formControlName="universe"
+        class="select-control">
+        <option value="" disabled selected>Select universe</option>
+        <option value="Marvel">Marvel</option>
+        <option value="DC">DC</option>
+        <option value="Other">Other</option>
+      </select>
+    </div>
+
+    <div class="form-actions">
+      <button 
+        type="submit" 
+        class="btn btn-primary" 
+        [disabled]="heroForm.invalid || isSubmitting()"
+        [attr.aria-busy]="isSubmitting()">
+        @if (isSubmitting()) {
+          <span class="spinner-small" aria-hidden="true"></span>
+          <span>Saving...</span>
+        } @else {
+          Save Hero
+        }
+      </button>
+      
+      <button 
+        type="button" 
+        class="btn btn-secondary"
+        [routerLink]="['/heroes']" 
+        [disabled]="isSubmitting()">
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>

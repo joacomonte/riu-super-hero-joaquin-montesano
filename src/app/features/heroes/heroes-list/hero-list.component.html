@@ -1,0 +1,113 @@
+<div class="container">
+  <div class="toolbar">
+    <div class="filters">
+      <app-hero-filter (filterChanged)="onFilteredHeroes($event)">
+      </app-hero-filter>
+
+      <app-hero-id-filter
+        (foundHero)="onFoundHero($event)"
+        (searchStarted)="onIdSearchStarted()"
+        (searchCompleted)="onIdSearchCompleted()"
+        (filterCleared)="onIdFilterCleared()"
+      >
+      </app-hero-id-filter>
+    </div>
+
+    <div class="toolbar-buttons">
+      <button class="primary" [routerLink]="['/hero/new']">Add New Hero</button>
+    </div>
+  </div>
+
+  <!-- Loading overlay for table operations -->
+  @if (isLoading() || isIdSearching()) {
+  <div class="loading-overlay">
+    <div class="loading-spinner"></div>
+    <p>
+      @if (isIdSearching()) { Searching for hero... } @else { Loading heroes...
+      }
+    </p>
+  </div>
+  }
+
+  <div class="table-container" [class.loading]="isLoading() || isIdSearching()">
+    @if (paginatedHeroes().length > 0) {
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Universe</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (hero of paginatedHeroes(); track hero.id) {
+        <tr>
+          <td>{{ hero.id }}</td>
+          <td>{{ hero.name }}</td>
+          <td>{{ hero.universe }}</td>
+          <td class="actions">
+            <button class="edit" [routerLink]="['/hero/edit', hero.id]">
+              Edit
+            </button>
+            <button
+              class="delete"
+              (click)="openDeleteDialog(hero.id, hero.name)"
+              [disabled]="isDeleting()"
+            >
+              @if (isDeleting() && heroToDeleteId() === hero.id) {
+              <span class="spinner-small"></span>
+              } @else { Delete }
+            </button>
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+    } @else {
+    <div class="no-heroes-found">
+      <p>No heroes found</p>
+    </div>
+    }
+  </div>
+
+  <div class="pagination">
+    <div>
+      <button
+        class="reset-btn"
+        (click)="clearLocalStorage()"
+        title="Clear all local data"
+      >
+        Reset Data
+      </button>
+    </div>
+    <div class="pagination-buttons">
+      <button (click)="prevPage()" [disabled]="currentPage() === 0">
+        Previous
+      </button>
+      <span>Page {{ currentPage() + 1 }} of {{ totalPages() }}</span>
+      <button
+        (click)="nextPage()"
+        [disabled]="currentPage() + 1 >= totalPages()"
+      >
+        Next
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Reusable Confirmation Dialog -->
+<app-confirmation-dialog
+  #confirmationDialog
+  title="Confirm Deletion"
+  [message]="
+    'Are you sure you want to delete <strong>' +
+    heroToDeleteName() +
+    '</strong>?'
+  "
+  confirmText="Delete"
+  cancelText="Cancel"
+  (confirmed)="confirmDelete()"
+  (cancelled)="cancelDelete()"
+>
+</app-confirmation-dialog>
