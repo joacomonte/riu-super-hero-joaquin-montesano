@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
 import { SuperHeroService } from '../../../core/services/super-hero.service';
-import { SuperHero } from '../../../core/models/super-hero.model';
+
 
 @Component({
   selector: 'app-hero-filter',
