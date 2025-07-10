@@ -13,6 +13,7 @@ ng serve
 ## Run the docker
 
 ```bash
+docker build --no-cache -t super-hero-app .
 docker run -d -p 8080:80 --name super-hero-container super-hero-app
 ```
 
