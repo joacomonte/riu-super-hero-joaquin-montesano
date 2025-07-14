@@ -39,24 +39,19 @@ export class HeroListComponent implements OnInit {
   @ViewChild("confirmationDialog")
   confirmationDialog!: ConfirmationDialogComponent;
 
-  // Pagination Signals
   currentPage = signal(0);
   pageSize = signal(5);
 
-  // Dialog signals
   heroToDeleteId = signal<number | null>(null);
   heroToDeleteName = signal<string>("");
 
-  // Hero data signals
   heroes = signal<SuperHero[]>([]);
   filteredHeroes = signal<SuperHero[]>([]);
 
-  // ID filter state
   foundHeroById = signal<SuperHero | null>(null);
   isIdSearching = signal<boolean>(false);
   isIdSearchCompleted = signal<boolean>(false);
 
-  // Loading states
   isLoading = signal<boolean>(false);
   isDeleting = signal<boolean>(false);
 
@@ -65,7 +60,6 @@ export class HeroListComponent implements OnInit {
     if (foundHero) {
       return [foundHero];
     }
-    // If ID search was completed and no hero was found, return empty array
     if (this.isIdSearchCompleted() && this.foundHeroById() === null) {
       return [];
     }
@@ -85,7 +79,6 @@ export class HeroListComponent implements OnInit {
     if (foundHero) {
       return [foundHero];
     }
-    // If ID search was completed and no hero was found, return empty array
     if (this.isIdSearchCompleted() && this.foundHeroById() === null) {
       return [];
     }

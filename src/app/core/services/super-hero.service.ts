@@ -11,7 +11,6 @@ export class SuperHeroService {
   private error = signal<string | null>(null);
   private readonly STORAGE_KEY = 'super-heroes';
 
-  // Public read-only signals
   public readonly heroesList = this.heroes.asReadonly();
   public readonly isLoading = this.loading.asReadonly();
   public readonly errorMessage = this.error.asReadonly();
@@ -20,7 +19,6 @@ export class SuperHeroService {
     this.loadHeroes();
   }
 
-  // LocalStorage helper methods
   private saveToLocalStorage(heroes: SuperHero[]): void {
     try {
       localStorage.setItem(this.STORAGE_KEY, JSON.stringify(heroes));
@@ -39,20 +37,16 @@ export class SuperHeroService {
     }
   }
 
-  // Load all heroes
   async loadHeroes(): Promise<void> {
     this.loading.set(true);
     this.error.set(null);
     
     try {
-      // First try to load from localStorage
       const localHeroes = this.loadFromLocalStorage();
       
       if (localHeroes.length > 0) {
-        // Use local data if available
         this.heroes.set(localHeroes);
       } else {
-        // Fallback to API if no local data
         const heroes = await this.apiService.getAllHeroes();
         this.heroes.set(heroes);
         this.saveToLocalStorage(heroes);
@@ -65,7 +59,6 @@ export class SuperHeroService {
     }
   }
 
-  // GET all heroes
   getHeroes() {
     return this.heroesList;
   }

@@ -5,7 +5,6 @@ import { SuperHero } from '../models/super-hero.model';
   providedIn: 'root',
 })
 export class SuperHeroApiService {
-  // Simulate database storage
   private heroes: SuperHero[] = [
     { id: 1, name: 'SUPERMAN', realName: 'Clark Kent', universe: 'DC' },
     { id: 2, name: 'BATMAN', realName: 'Bruce Wayne', universe: 'DC' },
@@ -19,7 +18,6 @@ export class SuperHeroApiService {
     { id: 10, name: 'AQUAMAN', realName: 'Arthur Curry', universe: 'DC' },
   ];
 
-  // Simulate API delay
   private async simulateApiDelay(min: number = 200, max: number = 800): Promise<void> {
     const delay = Math.floor(Math.random() * (max - min + 1)) + min;
     await new Promise(resolve => setTimeout(resolve, delay));

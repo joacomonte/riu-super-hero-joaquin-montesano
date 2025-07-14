@@ -33,7 +33,6 @@ describe('SuperHeroService', () => {
       ]
     });
 
-    // Clear localStorage before each test
     localStorage.clear();
     
     service = TestBed.inject(SuperHeroService);
@@ -363,7 +362,6 @@ describe('SuperHeroService', () => {
       service.loadHeroes();
       tick();
 
-      // Should not throw error and should still load heroes
       expect(service.heroesList()).toEqual(mockHeroes);
     }));
 
@@ -409,7 +407,6 @@ describe('SuperHeroService', () => {
 
       expect(service.heroesList()).toEqual(mockHeroes);
 
-      // Update heroes
       const updatedHeroes = [...mockHeroes, { id: 4, name: 'NEW HERO', realName: 'New Person', universe: 'Marvel' as const }];
       service['heroes'].set(updatedHeroes);
 
