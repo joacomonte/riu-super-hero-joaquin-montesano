@@ -186,7 +186,7 @@ export class HeroListComponent implements OnInit {
   }
 
   clearLocalStorage() {
-    this.superHeroService.clearLocalStorage();
+    localStorage.clear();
     window.location.reload();
   }
 }

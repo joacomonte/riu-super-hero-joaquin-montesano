@@ -179,9 +179,4 @@ export class SuperHeroService {
   clearError(): void {
     this.error.set(null);
   }
-
-  clearLocalStorage(): void {
-    localStorage.removeItem(this.STORAGE_KEY);
-    this.heroes.set([]);
-  }
 }

@@ -25,20 +25,28 @@ import { SuperHeroService } from '../../../core/services/super-hero.service';
   `]
 })
 export class HeroFilterComponent {
-  private superHeroService = inject(SuperHeroService);
   
   @Output() filterChanged = new EventEmitter<string>();
 
   filterControl = new FormControl('');
   currentFilter = signal('');
+  private readonly STORAGE_KEY = 'hero-name-filter';
 
   constructor() {
+    const savedFilter = this.loadFromLocalStorage();
+    if (savedFilter) {
+      this.filterControl.setValue(savedFilter);
+      this.currentFilter.set(savedFilter);
+      setTimeout(() => this.requestFilteredHeroes(savedFilter), 0);
+    }
+
     this.filterControl.valueChanges.pipe(
       debounceTime(300),
       distinctUntilChanged()
     ).subscribe(value => {
       const filterValue = value || '';
       this.currentFilter.set(filterValue);
+      this.saveToLocalStorage(filterValue);
       this.requestFilteredHeroes(filterValue);
     });
   }
@@ -47,8 +55,21 @@ export class HeroFilterComponent {
     this.filterChanged.emit(filter);
   }
 
+  private saveToLocalStorage(filter: string) {
+    if (filter) {
+      localStorage.setItem(this.STORAGE_KEY, filter);
+    } else {
+      localStorage.removeItem(this.STORAGE_KEY);
+    }
+  }
+
+  private loadFromLocalStorage(): string {
+    return localStorage.getItem(this.STORAGE_KEY) || '';
+  }
+
   resetFilter() {
     this.filterControl.setValue('');
+    localStorage.removeItem(this.STORAGE_KEY);
   }
 
   getCurrentFilter(): string {
