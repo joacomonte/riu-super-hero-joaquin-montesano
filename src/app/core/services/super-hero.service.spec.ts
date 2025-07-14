@@ -85,6 +85,7 @@ describe('SuperHeroService', () => {
   
     it('handles API errors', fakeAsync(() => {
       apiService.getAllHeroes.and.returnValue(Promise.reject(new Error('API Error')));
+      spyOn(console, 'error').and.stub();
       
       service.loadHeroes();
       tick();
@@ -95,6 +96,7 @@ describe('SuperHeroService', () => {
   
     it('falls back to API when localStorage fails', fakeAsync(() => {
       spyOn(localStorage, 'getItem').and.throwError('Storage error');
+      spyOn(console, 'error').and.stub();
       apiService.getAllHeroes.and.returnValue(Promise.resolve(mockHeroes));
       
       service.loadHeroes();
@@ -178,6 +180,7 @@ describe('SuperHeroService', () => {
 
     it('should handle API errors', fakeAsync(async () => {
       apiService.getHeroesByName.and.returnValue(Promise.reject(new Error('API Error')));
+      spyOn(console, 'error').and.stub();
 
       const result = service.getFilteredHeroes('super');
       tick();
@@ -209,6 +212,7 @@ describe('SuperHeroService', () => {
 
     it('should handle API errors', fakeAsync(async () => {
       apiService.getHeroById.and.returnValue(Promise.reject(new Error('API Error')));
+      spyOn(console, 'error').and.stub();
 
       const result = service.getHeroByIdFromApi(1);
       tick();
@@ -240,6 +244,7 @@ describe('SuperHeroService', () => {
     it('should handle API errors', fakeAsync(() => {
       const newHero = { name: 'NEW HERO', realName: 'New Person', universe: 'Marvel' as const };
       apiService.createHero.and.returnValue(Promise.reject(new Error('API Error')));
+      spyOn(console, 'error').and.stub();
 
       service.addHero(newHero).catch(() => {});
       tick();
@@ -269,6 +274,7 @@ describe('SuperHeroService', () => {
     it('should handle API errors', fakeAsync(() => {
       const updatedHero = { ...mockHero, name: 'UPDATED SUPERMAN' };
       apiService.updateHero.and.returnValue(Promise.reject(new Error('API Error')));
+      spyOn(console, 'error').and.stub();
 
       service.updateHero(updatedHero).catch(() => {});
       tick();
@@ -296,6 +302,7 @@ describe('SuperHeroService', () => {
 
     it('should handle API errors', fakeAsync(() => {
       apiService.deleteHero.and.returnValue(Promise.reject(new Error('API Error')));
+      spyOn(console, 'error').and.stub();
 
       service.deleteHero(1).catch(() => {});
       tick();
@@ -324,6 +331,7 @@ describe('SuperHeroService', () => {
 
     it('should handle API errors', fakeAsync(() => {
       apiService.getHeroesPaginated.and.returnValue(Promise.reject(new Error('API Error')));
+      spyOn(console, 'error').and.stub();
 
       service.getHeroesPaginated(1, 2).catch(() => {});
       tick();
@@ -357,6 +365,7 @@ describe('SuperHeroService', () => {
 
     it('should handle localStorage save errors', fakeAsync(() => {
       spyOn(localStorage, 'setItem').and.throwError('Storage error');
+      spyOn(console, 'error').and.stub();
       apiService.getAllHeroes.and.returnValue(Promise.resolve(mockHeroes));
 
       service.loadHeroes();
@@ -367,6 +376,7 @@ describe('SuperHeroService', () => {
 
     it('should handle localStorage load errors', fakeAsync(() => {
       spyOn(localStorage, 'getItem').and.throwError('Storage error');
+      spyOn(console, 'error').and.stub();
       apiService.getAllHeroes.and.returnValue(Promise.resolve(mockHeroes));
 
       service.loadHeroes();
@@ -389,6 +399,7 @@ describe('SuperHeroService', () => {
 
     it('should set loading to false even when API fails', fakeAsync(() => {
       apiService.getAllHeroes.and.returnValue(Promise.reject(new Error('API Error')));
+      spyOn(console, 'error').and.stub();
 
       service.loadHeroes();
       expect(service.isLoading()).toBeTrue();
